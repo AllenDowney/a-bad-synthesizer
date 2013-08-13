@@ -37,9 +37,11 @@
 const int slaveSelectPin = 10;
 const int pot0 = 0;
 const int pot1 = 2;
+const int filterPot0 = 3;
+const int filterPot1 = 1;
 const int pulsePin = 7;
 
-const int major_arpeggio[] = {0, 4, 7, 12};
+const int major_arpeggio[] = {0, 4, 7, 12, 7, 4, 0};
 
 unsigned long duration;
 
@@ -57,22 +59,29 @@ void setup() {
 }
 
 void loop() {
-    
-    for (int note=30; note<40; note++) {
+    int level = 1;
+    digitalPotWrite(filterPot0, level);
+    digitalPotWrite(filterPot1, level);
+
+    for (int note=28; note<70; note++) {
         play_arpeggio(note);
         delay(500);
     }
-
 }
 
+
 void play_arpeggio(int note) {
-    for (int i=0; i<4; i++) {
+    for (int i=0; i<7; i++) {
         play_note(note + major_arpeggio[i]);
         delay(250);
     }
 }
 
 void play_note(int note) {
+    digitalPotWrite(filterPot0, level0_table[note+12]);
+    digitalPotWrite(filterPot1, level1_table[note+12]);  
+    //digitalPotWrite(filterPot0, 1);
+    //digitalPotWrite(filterPot1, 1);  
     digitalPotWrite(pot0, level0_table[note]);
     digitalPotWrite(pot1, level1_table[note]);  
 }

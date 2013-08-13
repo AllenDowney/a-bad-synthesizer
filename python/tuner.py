@@ -1,3 +1,7 @@
+"""
+"""
+
+
 import bisect
 import serial
 import sys
@@ -82,7 +86,6 @@ class Table(object):
         for i in range(128):
             target = midi_to_freq(i)
             freq, level, diff = self.lookup(target)
-            #print i, freq, diff
             levels.append(level)
 
         self.print_levels(levels, 0)
@@ -153,7 +156,7 @@ def clear(filename='tuner.db'):
 
 
 def collect(filename='tuner.db'):
-    ser = serial.Serial('/dev/ttyACM0', 38400)
+    ser = serial.Serial('/dev/ttyACM1', 38400)
     #shelf = shelve.open('filename')
     rdb = Redis()
 
